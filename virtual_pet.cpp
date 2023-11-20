@@ -1,9 +1,12 @@
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <fstream>
+#include <vector>
 
 using namespace std;
+vector<string> names;
+int count=0;
 
 class pet {
 private:
@@ -22,10 +25,9 @@ public:
     happiness_level(ha);
     energy_level(e);
     age_level(a);
+    names.push_back(n);
   }
-  pet(){
-
-  }
+  pet() {}
   void setname(string n) { name = n; }
   void hunger_level(int h) { hunger = h; }
   void happiness_level(int ha) { happy = ha; }
@@ -101,16 +103,52 @@ public:
 };
 
 int main() {
-  //   int d = 1;
-  //   cout << "Welcome to petsvilla" << endl;
-  //   while (d) {
-  //     cout << "1. Feed a pet" << endl;
-  //     cout << "2. Play with a pet" << endl;
-  //     cout << "3. Let a pet rest" << endl;
-  //     cout << "4. Info of a pet" << endl;
-  //     cout << "5. Enter new pet" << endl;
-  //   }
-  pet a;
-  a.loadFromFile("mohit.txt");
-  a.get_info();
+  int d = 1, a;
+  int ans;
+  cout << "Welcome to petsvilla" << endl;
+  while (d) {
+    cout << "1. Feed a pet" << endl;
+    cout << "2. Play with a pet" << endl;
+    cout << "3. Let a pet rest" << endl;
+    cout << "4. Info of a pet" << endl;
+    cout << "5. Enter new pet" << endl;
+    cout << "6. List all pets" << endl;
+    cin >> a;
+    if (a == 1) {
+      cout << "Which pet to feed" << endl;
+      cin >> ans;
+      if (ans > 0 && ans < names.size()) {
+        names[ans].feed;
+      } else {
+        cout << "Enter within range" << endl;
+      }
+    } else if (a == 2) {
+
+    } else if (a == 3) {
+
+    } else if (a == 4) {
+
+    } else if (a == 5) {
+        string n;
+        int ha,h,e;
+        double a;
+        cout<<"Enter following info of new pet : "<<endl;
+        cout<<"Enter name of pet : "<<endl;
+        cin>>n;
+        cout<<"Enter happiness of pet : "<<endl;
+        cin>>ha;
+        cout<<"Enter energy of pet : "<<endl;
+        cin>>e;
+        cout<<"Enter hungriness of pet : "<<endl;
+        cin>>h;
+        cout<<"Enter age of pet : "<<endl;
+        cin>>a;
+        pet count(n,h,ha,e,a);
+        count++;
+    } else if (a == 6) {
+      cout << "List of pets : ";
+      for (int i = 0; i < names.size(); i++)
+        cout << names[i] << endl;
+    }
+  }
 }
