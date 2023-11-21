@@ -2,11 +2,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <vector>
 
 using namespace std;
-vector<string> names;
-int count=0;
 
 class pet {
 private:
@@ -25,10 +22,10 @@ public:
     happiness_level(ha);
     energy_level(e);
     age_level(a);
-    names.push_back(n);
   }
-  pet() {}
+  pet(string n) { setname(n); }
   void setname(string n) { name = n; }
+  string getname() { return name; }
   void hunger_level(int h) { hunger = h; }
   void happiness_level(int ha) { happy = ha; }
   void energy_level(int e) { energy = e; }
@@ -57,7 +54,6 @@ public:
     happy = std::max(0, happy - 15);
     if (age > 10) {
       hunger = std::max(0, hunger - 10);
-      happy = std::min(0, happy - 10);
       energy = std::max(100, energy + 20);
     }
   }
@@ -76,11 +72,11 @@ public:
       energy_level(0);
     }
 
-    cout << "Name : " << name << endl;
-    cout << "Hunger level : " << hunger << endl;
-    cout << "Happiness level : " << happy << endl;
-    cout << "Energy level : " << energy << endl;
-    cout << "Age of pet : " << age << endl;
+    cout << "Name : " << name << endl << endl;
+    cout << "Hunger level : " << hunger << endl << endl;
+    cout << "Happiness level : " << happy << endl << endl;
+    cout << "Energy level : " << energy << endl << endl;
+    cout << "Age of pet : " << age << endl << endl;
   }
   void saveToFile() const {
     std::ofstream file(name + ".txt");
@@ -104,51 +100,75 @@ public:
 
 int main() {
   int d = 1, a;
-  int ans;
-  cout << "Welcome to petsvilla" << endl;
+  string l;
+  pet loady("empty");
+  pet savy("empty");
+  cout << "Welcome to petsvilla" << endl << endl;
   while (d) {
-    cout << "1. Feed a pet" << endl;
-    cout << "2. Play with a pet" << endl;
-    cout << "3. Let a pet rest" << endl;
-    cout << "4. Info of a pet" << endl;
-    cout << "5. Enter new pet" << endl;
-    cout << "6. List all pets" << endl;
+    cout << "1. Load a pet" << endl << endl;
+    cout << "2. Play with the pet" << endl << endl;
+    cout << "3. Let the pet rest" << endl << endl;
+    cout << "4. Feed the pet" << endl << endl;
+    cout << "5. Info of the pet" << endl << endl;
+    cout << "6. Enter a new pet" << endl << endl;
+    cout << "7. Save session" << endl << endl;
     cin >> a;
     if (a == 1) {
-      cout << "Which pet to feed" << endl;
-      cin >> ans;
-      if (ans > 0 && ans < names.size()) {
-        names[ans].feed;
-      } else {
-        cout << "Enter within range" << endl;
-      }
+      cout << "Which pet do you want to load : ";
+      cin >> l;
+      loady.loadFromFile(l + ".txt");
     } else if (a == 2) {
-
+      if (loady.getname() == "empty") {
+        cout << "Load a pet first" << endl << endl;
+      } else {
+        loady.play();
+        cout << "Levels after this session" << endl << endl;
+        loady.get_info();
+      }
     } else if (a == 3) {
-
+      if (loady.getname() == "empty") {
+        cout << "Load a pet first" << endl << endl;
+      } else {
+        loady.rest();
+        loady.get_info();
+      }
     } else if (a == 4) {
-
+      if (loady.getname() == "empty") {
+        cout << "Load a pet first" << endl << endl;
+      } else {
+        loady.feed();
+        loady.get_info();
+      }
     } else if (a == 5) {
-        string n;
-        int ha,h,e;
-        double a;
-        cout<<"Enter following info of new pet : "<<endl;
-        cout<<"Enter name of pet : "<<endl;
-        cin>>n;
-        cout<<"Enter happiness of pet : "<<endl;
-        cin>>ha;
-        cout<<"Enter energy of pet : "<<endl;
-        cin>>e;
-        cout<<"Enter hungriness of pet : "<<endl;
-        cin>>h;
-        cout<<"Enter age of pet : "<<endl;
-        cin>>a;
-        pet count(n,h,ha,e,a);
-        count++;
+      if (loady.getname() == "empty") {
+        cout << "Load a pet first" << endl << endl;
+      } else {
+        loady.get_info();
+      }
     } else if (a == 6) {
-      cout << "List of pets : ";
-      for (int i = 0; i < names.size(); i++)
-        cout << names[i] << endl;
+      string n;
+      int ha, h, e;
+      double a;
+      cout << "Enter following info of new pet : " << endl << endl;
+      cout << "Enter name of pet : " << endl << endl;
+      cin >> n;
+      cout << "Enter happiness of pet : " << endl << endl;
+      cin >> ha;
+      cout << "Enter energy of pet : " << endl << endl;
+      cin >> e;
+      cout << "Enter hungriness of pet : " << endl << endl;
+      cin >> h;
+      cout << "Enter age of pet : " << endl << endl;
+      cin >> a;
+      pet newp(n, h, ha, e, a);
+      newp.saveToFile();
+      loady.loadFromFile(n + ".txt");
+    } else if (a == 7) {
+      if (loady.getname() == "empty") {
+        cout << "Load a pet first" << endl << endl;
+      } else {
+        loady.saveToFile();
+      }
     }
   }
 }
