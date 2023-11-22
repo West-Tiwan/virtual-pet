@@ -4,7 +4,6 @@
 #include <string>
 
 using namespace std;
-
 class pet {
 private:
   string name;
@@ -31,30 +30,30 @@ public:
   void energy_level(int e) { energy = e; }
   void age_level(double a) { age = a; }
   void feed() {
-    hunger = std::max(0, hunger - 20);
-    happy = std::min(100, happy + 10);
-    energy = std::max(0, energy - 10);
+    hunger = max(0, hunger - 20);
+    happy = min(100, happy + 10);
+    energy = max(0, energy - 10);
     if (age > 10) {
-      happy = std::min(0, happy - 10);
-      energy = std::max(0, energy - 10);
+      happy = min(0, happy - 10);
+      energy = max(0, energy - 10);
     }
   }
   void play() {
-    happy = std::min(100, happy + 20);
-    hunger = std::max(0, hunger - 15);
-    energy = std::max(0, energy - 20);
+    happy = min(100, happy + 20);
+    hunger = max(0, hunger - 15);
+    energy = max(0, energy - 20);
     if (age > 10) {
-      hunger = std::max(0, hunger - 15);
-      energy = std::max(0, energy - 10);
+      hunger = max(0, hunger - 15);
+      energy = max(0, energy - 10);
     }
   }
   void rest() {
     age = age + 0.5;
-    energy = std::min(100, energy + 30);
-    happy = std::max(0, happy - 15);
+    energy = min(100, energy + 30);
+    happy = max(0, happy - 15);
     if (age > 10) {
-      hunger = std::max(0, hunger - 10);
-      energy = std::max(100, energy + 20);
+      hunger = max(0, hunger - 10);
+      energy = max(100, energy + 20);
     }
   }
   void get_info() {
@@ -79,7 +78,7 @@ public:
     cout << "Age of pet : " << age << endl << endl;
   }
   void saveToFile() const {
-    std::ofstream file(name + ".txt");
+    ofstream file(name + ".txt");
     file << name << "\n"
          << hunger << "\n"
          << happy << "\n"
@@ -87,13 +86,13 @@ public:
          << age << "\n";
     file.close();
   }
-  void loadFromFile(const std::string &fileName) {
-    std::ifstream file(fileName);
+  void loadFromFile(const string &fileName) {
+    ifstream file(fileName);
     if (file.is_open()) {
       file >> name >> hunger >> happy >> energy >> age;
       file.close();
     } else {
-      throw std::invalid_argument("Unable to open file: " + fileName);
+      throw invalid_argument("Unable to open file: " + fileName);
     }
   }
 };
